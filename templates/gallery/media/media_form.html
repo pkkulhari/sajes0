@@ -1,0 +1,184 @@
+{% extends 'dashboard/base.html' %} {% load static %} {% block css %}
+<link href="{% static 'css/image-uploader.min.css' %}" rel="stylesheet" />
+{% endblock css %} {% block inline_css %}
+<style>
+  #previewVideos {
+    display: flex;
+    gap: 20px;
+  }
+
+  #previewVideos div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #previewVideos div a {
+    font-size: 14px;
+  }
+
+  #previewVideos div a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+{% endblock inline_css %} {% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Gallery Media</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Gallery</li>
+          <li class="breadcrumb-item active">Media</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Upload Media</h3>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <h5>Images</h5>
+            <form
+              class="iu"
+              id="imageUploader"
+              data-action-create="{% url 'dashboard:gallery:media-create' pk=albumId %}"
+              data-action-delete="{% url 'dashboard:gallery:media-delete' pk=albumId %}"
+              data-csrf-token="{{ csrf_token }}"
+            >
+              <div class="iu__message">Drag & Drop images or click to upload</div>
+              <div class="iu__preview">
+                {% for image in images %}
+                <div class="iu__preview--image" id="{{ image.uuid }}">
+                  <img src="{{ image.image.url }}" alt="" />
+                  <div class="overlay"></div>
+                  <span class="remove">Remove</span>
+                </div>
+                {% endfor %}
+              </div>
+            </form>
+
+            <h5 class="mt-4">Videos</h5>
+            <form class="form-inline" id="youtubeVideos">
+              <input
+                type="url"
+                name="url"
+                class="form-control flex-fill"
+                placeholder="Youtube Video URL"
+              />
+              <button type="submit" class="btn btn-primary ml-2">Add</button>
+            </form>
+            <div id="previewVideos" class="mt-4">
+              {% for video in videos %}
+              <div>
+                <iframe
+                  src="https://www.youtube.com/embed/{{video.url}}"
+                  frameborder="0"
+                  allowfullscreen
+                ></iframe>
+                <a href="javascript:void(0)" id="{{video.url}}">Remove video</a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+{% endblock content %} {% block js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuidv4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/compressorjs/1.1.1/compressor.min.js"></script>
+<script src="{% static 'js/image-uploader.js' %}"></script>
+{% endblock js %} {% block inline_js %}
+<script>
+  $(document).ready(function () {
+    // <============ Youtube Video Uploader ==========>
+
+    // Get stored video's IDs
+    storedVideos = []
+    $('#previewVideos iframe').each(function () {
+      storedVideos.push(youtube_parser(this.src))
+    })
+
+    // Bind 'click' event
+    $('#previewVideos a').each(function () {
+      this.addEventListener('click', rmVideo)
+    })
+
+    // Store and preview video
+    $('#youtubeVideos').on('submit', function (e) {
+      e.preventDefault()
+      const vid = youtube_parser($('input[name="url"]').val())
+
+      if (storedVideos.includes(vid)) {
+        alert('This video already exists')
+        $('input[name="url"]').val('')
+        return
+      }
+
+      $.ajax({
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        url: "{% url 'dashboard:gallery:media-create' pk=albumId %}",
+        data: { vid: vid },
+      })
+
+      $(`<div>
+          <iframe src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe>
+          <a href="javascript:void(0)" id="${vid}">Remove video</a>
+        </div>`).prependTo('#previewVideos')
+
+      $(`#${vid}`).bind('click', rmVideo)
+      $('input[name="url"]').val('')
+      storedVideos.push(vid)
+    })
+
+    // Helper functions
+    function youtube_parser(url) {
+      const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+      const match = url.match(regExp)
+      return match && match[7].length == 11 ? match[7] : false
+    }
+
+    function rmVideo() {
+      $.ajax({
+        method: 'POST',
+        headers: { 'X-CSRFToken': '{{ csrf_token }}' },
+        url: "{% url 'dashboard:gallery:media-delete' pk=albumId %}",
+        data: { vid: this.id },
+      })
+
+      this.parentElement.remove()
+      storedVideos = storedVideos.filter((vid) => vid !== this.id)
+    }
+
+    // <============ Delete Image ==========>
+    $('.iu__preview--image').on('click', (e) => {
+      imageDelete(e.target.parentElement.id)
+      e.stopPropagation()
+    })
+  })
+</script>
+{% endblock inline_js %}

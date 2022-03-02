@@ -1,0 +1,80 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="/">SAJES</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#mainNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="/">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if 'about' in request.path %}active{% endif %}" href="#" data-bs-toggle="dropdown"
+            >About</a
+          >
+          <ul class="dropdown-menu">
+            <li>
+              <a href="{% url 'core:about' %}#whoWeAre" class="dropdown-item"
+                >Who We Are</a
+              >
+            </li>
+            <li>
+              <a href="{% url 'core:about' %}#history" class="dropdown-item"
+                >History</a
+              >
+            </li>
+            <li>
+              <a href="{% url 'core:about' %}#missionAndVision" class="dropdown-item"
+                >Mission & Vision</a
+              >
+            </li>
+            <li>
+              <a href="{% url 'core:about' %}#trusteeMessage" class="dropdown-item"
+                >Trustee's Message</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if 'institutes' in request.path %}active{% endif %}" href="#" data-bs-toggle="dropdown"
+            >Institutes</a
+          >
+          <ul class="dropdown-menu">
+            <li>
+              <a href="#" class="dropdown-item">Shrinathji College, Daman</a>
+            </li>
+            <li>
+              <a href="#" class="dropdown-item">Shrinathji School, Daman</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'core:gallery' %}" class="nav-link {% if 'gallery' in request.path %}active{% endif %}">Gallery</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if 'events' in request.path or 'news' in request.path %}active{% endif %}" href="#" data-bs-toggle="dropdown"
+            >Events & News</a
+          >
+          <ul class="dropdown-menu">
+            <li>
+              <a href="{% url 'core:events' %}" class="dropdown-item">Events</a>
+            </li>
+            <li>
+              <a href="{% url 'core:news' %}" class="dropdown-item">News</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'core:contact' %}" class="nav-link {% if 'contact' in request.path %}active{% endif %}">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

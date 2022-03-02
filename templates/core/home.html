@@ -1,0 +1,200 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero -->
+<section class="mb-4">
+  <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-overlay"></div>
+    <div class="carousel-indicators">
+      <button
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide-to="0"
+        class="active"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide-to="1"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#heroCarousel"
+        data-bs-slide-to="2"
+      ></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img
+          src="{% static 'img/slides/slide-1.jpg' %}"
+          class="d-block w-100"
+          alt="Slide 1"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="{% static 'img/slides/slide-2.jpg' %}"
+          class="d-block w-100"
+          alt="Slide 2"
+        />
+      </div>
+      <div class="carousel-item">
+        <img
+          src="{% static 'img/slides/slide-3.jpg' %}"
+          class="d-block w-100"
+          alt="slide 3"
+        />
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#heroCarousel"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#heroCarousel"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+    <div class="carousel-text text-light text-center">
+      <div class="display-2 fw-bold mb-3 p-lg-3">
+        Shree Amar Jyot
+        <span class="text-warning">Education Society</span>, Daman
+      </div>
+      <a
+        href="#whoWeAre"
+        class="btn btn-outline-light btn-lg d-none d-lg-inline-block"
+        >Know More</a
+      >
+    </div>
+  </div>
+</section>
+
+<!-- Who we are -->
+<section class="mb-4 mb-lg-5 p-1 p-lg-4" id="whoWeAre">
+  <div class="container">
+    <h1>Who We <span class="text-light-blue">Are?</span></h1>
+    <div class="row mt-3">
+      <div class="col-lg-4">
+        <img
+          src="{% static 'img/who-we-are.jpg' %}"
+          alt="Who we are"
+          class="img-fluid img-thumbnail"
+        />
+      </div>
+      <div class="col-lg d-flex flex-column justify-content-between py-3">
+        <p class="lead">
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae
+          doloribus minima voluptas consequatur, expedita impedit eveniet,
+          ipsum beatae nemo vel ducimus dolore veritatis commodi nisi!
+          Facere id eius illum error? Lorem ipsum dolor sit, amet
+          consectetur adipisicing elit. Vitae doloribus minima voluptas
+          consequatur, expedita impedit eveniet, ipsum beatae nemo vel
+          ducimus dolore veritatis commodi nisi! Facere id eius illum
+          error...
+        </p>
+        <div class="text-end mt-lg-3">
+          <a href="{% url 'core:about' %}#whoWeAre" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Events & News -->
+<section class="mb-4 p-4 p-lg-5 position-relative" id="eventsAndNews">
+  <div class="container">
+    <div class="row justify-content-between gap-4">
+      <!-- New Events -->
+      <div class="col-md">
+        <h1 class="mb-3">
+          New <span class="text-light-blue">Events</span>
+        </h1>
+
+        {% for event in events %}
+        <div class="d-flex align-items-center mb-3 mb-lg-1">
+          <div
+            class="
+              p-1
+              bg-warning
+              text-center
+              rounded
+              d-none d-lg-block
+              calendar
+            "
+          >
+            <span class="h1 m-0 f">{{ event.start_datetime|date:'d' }}</span> <br />
+            <span class="text-uppercase">{{ event.start_datetime|date:'M, Y' }}</span>
+          </div>
+          <div class="p-lg-3">
+            <a href="{% url 'core:event-detail' slug=event.slug %}" class="lead fw-bold mb-1">{{ event.title }}</a>
+            <div class="d-flex align-items-center">
+              <i class="bi-alarm me-2"></i>
+              <span class="text-uppercase">
+                {{ event.start_datetime|date:'M d, h:i A' }} -
+                {{ event.finish_datetime|date:'M d, h:i A' }}
+              </span>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+
+      <!-- Latest News -->
+      <div class="col-md">
+        <h1 class="mb-3">
+          Latest <span class="text-light-blue">News</span>
+        </h1>
+
+        {% for news in news_objs %}
+        <div class="mb-3 mb-lg-4">
+          <a href="{% url 'core:news-detail' slug=news.slug %}" class="lead fw-bold mb-1">{{ news.title }}</a>
+          <div class="d-flex align-items-center">
+            <i class="bi-calendar-check me-2"></i>
+            <span>{{ news.created }}</span>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Institutes -->
+<section class="mb-4 p-3 p-lg-5" id="institutes">
+  <div class="container">
+    <div class="row gap-md-5 gap-3 text-light">
+      <div class="col-md p-5" id="college">
+        <div class="overlay"></div>
+        <div class="p-lg-5 position-relative">
+          <h2 class="mb-4">
+            Shrinathji College of
+            <span class="text-warning">BBC, BBA & B.Com</span>, Daman
+          </h2>
+          <a href="#" class="btn btn-outline-light">Know More</a>
+        </div>
+      </div>
+      <div class="col-md p-5" id="school">
+        <div class="overlay"></div>
+        <div class="p-lg-5 position-relative">
+          <h2 class="mb-4">
+            Shrinathji <span class="text-warning">School</span>, Daman
+          </h2>
+          <a href="#" class="btn btn-outline-light">Know More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

@@ -1,0 +1,74 @@
+{% extends 'core/base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+<!-- Events -->
+<section class="my-4 pt-4 pb-1">
+  <div class="container">
+    <!-- Buttons -->
+    <div class="d-flex justify-content-center align-items-center gap-2 mb-4">
+      <a
+        href="{% query_params request filter='upcomming' %}"
+        class="btn btn-outline-primary {% if request.GET.filter is None or request.GET.filter == 'upcomming' %}active{% endif %}"
+      >
+        Upcomming
+      </a>
+      <a
+        href="{% query_params request filter='happening' %}"
+        class="btn btn-outline-primary {% if request.GET.filter == 'happening' %}active{% endif %}"
+      >
+        Happening
+      </a>
+      <a
+        href="{% query_params request filter='expired' %}"
+        class="btn btn-outline-primary {% if request.GET.filter == 'expired' %}active{% endif %}"
+      >
+        Expired
+      </a>
+    </div>
+
+    <!-- Items -->
+    <div>
+      {% for event in events %}
+      <div class="row align-items-center gap-2 mb-4">
+        <div class="col-1 bg-warning text-center p-1 rounded d-none d-lg-block">
+          <span class="display-3 lh-1 m-0 fw-bold" >
+            {{ event.start_datetime|date:'d' }}</span
+          >
+          <span>{{ event.start_datetime|date:'F' }}</span>
+        </div>
+        <div class="col">
+          <a href="{% url 'core:event-detail' slug=event.slug %}" class="h3">{{ event.title }}</a>
+          <div class="d-flex align-items-center flex-wrap gap-1 mt-1">
+            <small class="me-3 d-lg-none">
+              <i class="bi-calendar me-1"></i>
+              <span>{{ event.start_datetime|date:'M d, Y' }}</span>
+            </small>
+            <small class="me-md-3">
+              <i class="bi-clock me-1"></i>
+              <span>
+                {{ event.start_datetime|date:'M d, h:i A' }} -
+                {{ event.finish_datetime|date:'M d, h:i A' }}
+              </span>
+            </small>
+            <small>
+              <i class="bi-geo-alt me-1"></i>
+              <span>{{ event.address }}</span>
+            </small>
+          </div>
+        </div>
+        <div class="col-2 d-none d-lg-block">
+          <img
+            class="img-fluid img-thumbnail"
+            src="{{ event.thumbnail.url }}"
+            alt="Event Image"
+          />
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Pagination -->
+{% include 'core/includes/pagination.html' %} {% endblock content %}

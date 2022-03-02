@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<!-- News Detail -->
+<section class="my-4 py-4">
+  <div class="container">
+    <article>
+      <h1 class="mb-4">{{ news.title }}</h1>
+      <div class="d-flex gap-5 mb-4">
+        <div>
+          <div>Posted By</div>
+          <div class="fw-bold text-uppercase">Admin</div>
+        </div>
+        <div>
+          <div>Date</div>
+          <div class="fw-bold text-uppercase">{{ news.created|date:'M d, Y' }}</div>
+        </div>
+      </div>
+      <img
+        class="img-fluid rounded mb-4"
+        src="{{ news.thumbnail.url }}"
+        alt="News Image"
+        style="max-height: 500px; width: 100%; object-fit: cover;"
+      />
+      <div>
+        <!-- Content -->
+        {{ news.content|safe }}
+      </div>
+    </article>
+  </div>
+</section>
+{% endblock content %}

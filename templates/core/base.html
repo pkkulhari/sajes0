@@ -1,0 +1,131 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon" />
+
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}" />
+    {% block css %} {% endblock css %}
+
+    <script defer src="{% static 'js/vendors.min.js' %}"></script>
+    <script defer type="module" src="{% static 'js/script.js' %}"></script>
+    {% block js %} {% endblock js %}
+  </head>
+  <body>
+    <!-- Loading animation -->
+    <section id="loader">
+      <img src="{% static 'img/loader.gif' %}" alt="loading..." />
+    </section>
+
+    <!-- Wrapper -->
+    <div class="d-flex flex-column wrapper">
+      <!-- Navbar -->
+      {% include 'core/includes/navbar.html' %}
+
+      <!-- Main -->
+      <main class="flex-fill">{% block content %} {% endblock content %}</main>
+
+      <!-- Footer -->
+      <footer class="p-4 text-light bg-light-blue">
+        <div class="container">
+          <!-- Upper section -->
+          <div class="row pt-4 pb-5 border-bottom gap-4">
+            <!-- About -->
+            <div class="col-md-6 col-lg">
+              <h2 class="text-warning">SAJES</h2>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt sit dolores voluptas
+                blanditiis, voluptatem nemo cupiditate earum autem voluptatibus repellat.
+              </p>
+              <div class="mb-2">
+                <a href="#" class="text-light me-2 p-1 border"><i class="bi-facebook"></i></a>
+                <a href="#" class="text-light me-2 p-1 border"><i class="bi-twitter"></i></a>
+                <a href="#" class="text-light me-2 p-1 border"><i class="bi-instagram"></i></a>
+                <a href="#" class="text-light me-2 p-1 border"><i class="bi-youtube"></i></a>
+              </div>
+            </div>
+
+            <!-- Usefull Links -->
+            <div class="col-md-5 col-lg">
+              <span class="fw-bold text-warning">USEFULL LINKS</span>
+              <div class="d-flex mt-3">
+                <ul class="p-0 m-0">
+                  <li class="list-unstyled mb-2">
+                    <i class="bi-caret-right"></i>
+                    <a class="text-light" href="{% url 'core:about' %}">About Us</a>
+                  </li>
+                  <li class="list-unstyled mb-2">
+                    <i class="bi-caret-right"></i>
+                    <a class="text-light" href="{% url 'core:gallery' %}">Gallery</a>
+                  </li>
+                  <li class="list-unstyled mb-2">
+                    <i class="bi-caret-right"></i>
+                    <a class="text-light" href="{% url 'core:events' %}">Events</a>
+                  </li>
+                  <li class="list-unstyled mb-2">
+                    <i class="bi-caret-right"></i>
+                    <a class="text-light" href="{% url 'core:contact' %}">Contact Us</a>
+                  </li>
+                </ul>
+                <ul class="m-0">
+                  <li class="list-unstyled mb-2">
+                    <i class="bi-caret-right"></i>
+                    <a class="text-light" href="https://www.vnsgu.ac.in/" target="_blank">VNSGU</a>
+                  </li>
+                  <li class="list-unstyled mb-2">
+                    <i class="bi-caret-right"></i>
+                    <a class="text-light" href="https://www.cowin.gov.in/" target="_blank"
+                      >Covid 19</a
+                    >
+                  </li>
+                  <li class="list-unstyled mb-2">
+                    <i class="bi-caret-right"></i>
+                    <a class="text-light" href="https://www.who.int/" target="_blank">WHO</a>
+                  </li>
+                  <li class="list-unstyled mb-2">
+                    <i class="bi-caret-right"></i>
+                    <a class="text-light" href="https://en.wikipedia.org/" target="_blank"
+                      >Wikipedia</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Connect with us -->
+            <div class="col-md">
+              <span class="fw-bold text-warning">CONNECT WITH US</span>
+              <div class="mt-3 mb-2">
+                <i class="bi-telephone me-2"></i><span>+91 9685705837</span>
+              </div>
+              <div class="mb-2"><i class="bi-envelope me-2"></i><span>contact@sajes.in</span></div>
+              <div class="d-flex">
+                <i class="bi-geo-alt"></i>
+                <div class="ms-2">
+                  69/1, Village: Varkund, Opp. All India Radio Station, Vapi-Daman Main Road, Nani
+                  Daman-396210.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Copyright -->
+          <div class="d-flex align-items-center f-size-sm pt-4 flex-column flex-md-row gap-2">
+            <small>&copy; {% now 'Y' %} SAJES, ALL RIGHTS RESERVED</small>
+            <small class="ms-md-auto"
+              >Made with &#128155; By
+              <a href="https://github.com/pkkulhari/" class="text-light" target="_blank"
+                >Praveen Kumar</a
+              ></small
+            >
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

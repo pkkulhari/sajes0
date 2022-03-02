@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Gallery Media -->
+<section class="my-4 py-4 px-3 p-lg-4" id="galleryMedia">
+  <div class="container">
+    <h1 class="mb-4 text-center">Rangoli Competion 2021</h1>
+    <div class="d-flex justify-content-center align-items-center gap-2 mb-4">
+      <a
+        href="{% url 'core:gallery-media' pk=pk %}"
+        class="btn btn-outline-primary {% if 'media' in request.path %} active {% endif %}"
+        >All</a
+      >
+      <a
+        href="{% url 'core:gallery-images' pk=pk %}"
+        class="btn btn-outline-primary {% if 'images' in request.path %} active {% endif %}"
+        >Images</a
+      >
+      <a
+        href="{% url 'core:gallery-videos' pk=pk %}"
+        class="btn btn-outline-primary {% if 'videos' in request.path %} active {% endif %}"
+        >Vidoes</a
+      >
+    </div>
+    <div class="row justify-content-center gallery gap-3">
+      {% for image in page_obj %}
+      <a href="{{ image.image.url }}"  target="_blank" class="col-md-5 col-lg-3 p-0">
+        <img src="{{ image.image.url }}" alt="Rangoli" class="img-fluid" />
+      </a>
+      {% endfor %} {% for video in videos %}
+      <div class="col-md-5 col-lg-3 p-0">
+        <div class="ratio ratio-16x9">
+          <iframe
+            src="https://www.youtube.com/embed/{{ video.url }}"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Pagination -->
+{% include 'core/includes/pagination.html' %} {% endblock content %}

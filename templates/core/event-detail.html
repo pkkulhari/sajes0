@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<!-- Event Detial -->
+<section class="my-4 py-4" id="eventDetail">
+  <div class="container">
+    <article>
+      <h1 class="mb-4">{{ event.title }}</h1>
+      <img
+        class="img-fluid rounded mb-4"
+        src="{{ event.thumbnail.url }}"
+        alt="Event Image"
+        style="max-height: 500px; width: 100%; object-fit: cover;"
+      />
+      <div class="row">
+        <div class="col">
+          <!-- Content -->
+          {{ event.content|safe }}
+        </div>
+        <div class="col-lg-3 border-top mt-3 pt-4 pt-lg-0 sidebar">
+          <div class="d-flex gap-2 mb-4">
+            <i class="bi-clock-fill text-light-blue"></i>
+            <div>
+              <div class="fw-bold">Start Time</div>
+              <div>{{ event.start_datetime|date:'h:m A' }}</div>
+              <div>{{ event.start_datetime|date:'M d, Y' }}</div>
+            </div>
+          </div>
+          <div class="d-flex gap-2 mb-4">
+            <i class="bi-flag-fill text-light-blue"></i>
+            <div>
+              <div class="fw-bold">Finish Time</div>
+              <div>{{ event.finish_datetime|date:'h:m A' }}</div>
+              <div>{{ event.finish_datetime|date:'M d, Y' }}</div>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <i class="bi-geo-alt-fill text-light-blue"></i>
+            <div>
+              <div class="fw-bold">Address</div>
+              <div>{{ event.address }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+{% endblock content %}

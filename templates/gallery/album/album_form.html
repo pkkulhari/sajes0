@@ -1,0 +1,110 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block inline_css %}
+<style>
+  .validation-error {
+    color: #DE4E46;
+  }
+</style>
+{% endblock inline_css %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Gallery Albums</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}">Home</a></li>
+          <li class="breadcrumb-item active">Gallery</li>
+          <li class="breadcrumb-item active">
+            {% if 'update' in request.path %}
+            Edit
+            {% else %}
+            Add
+            {% endif %}
+            Album
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">
+              {% if 'update' in request.path %}
+              Edit
+              {% else %}
+              Add
+              {% endif %}
+              Album
+            </h3>
+          </div>
+          <!-- /.card-header -->
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="card-body">
+              <div class="form-group">
+                <label>Name</label>
+                {{ form.title }}
+                <span class="validation-error">{{ form.title.errors }}</span>
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label>Date</label>
+                      {{ form.created }}
+                      <span class="validation-error">{{ form.created.errors }}</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label>Thumbnail Image</label>
+                    {{ form.thumbnail }}
+                    <span class="validation-error">{{ form.thumbnail.errors }}</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-4">
+                  <div class="form-group">
+                    <label>Institute</label>
+                    {{ form.institute }}
+                    <span class="validation-error">{{ form.institute.errors }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">
+                {% if 'update' in request.path %} Update {% else %} Add {% endif %}
+              </button>
+              <a href="#" class="btn btn-default float-right">Cancel</a>
+            </div>
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+{% endblock content %}

@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{title}} | Dashboard - SAJES</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/x-icon">
+
+  {% include 'dashboard/includes/head.html' %}
+  {% block css %} {% endblock css %}
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/css/adminlte.min.css">
+
+  {% block inline_css %} {% endblock inline_css %}
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+{% include 'dashboard/includes/navbar.html' %}
+{% include 'dashboard/includes/sidebar.html' %}
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+{% block content %} {% endblock content %}
+</div>
+<!-- /.content-wrapper -->
+
+{% include 'dashboard/includes/footer.html' %}
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+{% block js %} {% endblock js %}
+
+<!-- AdminLTE App -->
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
+
+{% block inline_js %} {% endblock inline_js %}
+</body>
+</html>

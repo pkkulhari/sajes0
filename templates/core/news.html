@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<!-- Latest News -->
+<section class="my-4 pt-4 pb-1">
+  <div class="container">
+    <!-- Title -->
+    <h1 class="mb-4">Latest <span class="text-light-blue">News</span></h1>
+
+    <!-- Items -->
+    <div>
+      {% for news in news_obj %}
+      <div class="row mb-5 mb-md-4 g-3">
+        <div class="col-md-5 col-lg-2">
+          <img
+            src="{{ news.thumbnail.url }}"
+            alt="News Image"
+            class="img-fluid img-thumbnail"
+          />
+        </div>
+        <div class="col col-lg-7">
+          <a href="{% url 'core:news-detail' slug=news.slug %}" class="h4">{{ news.title }}</a>
+          <div class="mt-2">
+            <span class="me-3">{{ news.get_content_preview|safe }} ...</span>
+            <a href="{% url 'core:news-detail' slug=news.slug %}" class="text-light-blue">Read More >></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Pagination -->
+{% include 'core/includes/pagination.html' %}
+{% endblock content %}

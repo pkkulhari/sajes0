@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<!-- Gallery -->
+<section class="my-4 py-4 px-3 p-lg-4">
+  <div class="container">
+    <h1 class="mb-4 text-center">
+      Gallary <span class="text-light-blue">Albums</span>
+    </h1>
+    <div class="row gy-4 justify-content-center">
+
+      {% for album in albums %}
+      <div class="col-md-5 col-lg-3">
+        <div class="card text-center">
+          <img
+            src="{{ album.thumbnail.url }}"
+            class="card-img-top"
+            alt="{{ album.thumbnail.name }}"
+          />
+          <div class="card-body">
+            <a href="{% url 'core:gallery-media' pk=album.id %}" class="card-title h5">
+              {{ album.title }}
+            </a>
+            <br />
+            <small
+              ><i class="bi-calendar me-1"></i> <span>{{ album.created }}</span></small
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
+<!-- Pagination -->
+{% include 'core/includes/pagination.html' %}
+
+{% endblock content %}

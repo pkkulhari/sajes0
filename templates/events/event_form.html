@@ -1,0 +1,145 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/plugins/bootstrap-datetimepicker.css' %}">
+{% endblock css %}
+
+{% block inline_css %}
+<style>
+  .validation-error {
+    color: #DE4E46;
+  }
+</style>
+{% endblock inline_css %}
+
+{% block content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1>Events</h1>
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">
+            {% if 'update' in request.path %}
+            Edit
+            {% else %}
+            Add
+            {% endif %}
+            Event
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <!-- /.row -->
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">
+              {% if 'update' in request.path %}
+              Edit
+              {% else %}
+              Add
+              {% endif %}
+              Event
+            </h3>
+          </div>
+          <!-- /.card-header -->
+          <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <div class="card-body">
+              <div class="form-group">
+                <label>Title</label>
+                {{ form.title }}
+                <span class="validation-error">{{ form.title.errors }}</span>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Start Date and Time</label>
+                      {{ form.start_datetime }}
+                      <span class="validation-error">{{ form.start_datetime.errors }}</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Finish Date and Time</label>
+                      {{ form.finish_datetime }}
+                      <span class="validation-error">{{ form.finish_datetime.errors }}</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Image</label>
+                    {{ form.thumbnail }}
+                    <span class="validation-error">{{ form.thumbnail.errors }}</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <label>Institute</label>
+                    {{ form.institute }}
+                    <span class="validation-error">{{ form.institute.errors }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Address</label>
+                {{ form.address }}
+                <span class="validation-error">{{ form.address.errors }}</span>
+              </div>
+              <div class="form-group">
+                <label>Content</label>
+                {{ form.content }}
+                <span class="validation-error">{{ form.content.errors }}</span>
+              </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+              <button type="submit" class="btn btn-primary">Publish</button>
+              <a href="#" class="btn btn-default float-right">Cancel</a>
+            </div>
+          </form>
+        </div>
+        <!-- /.card -->
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<!-- /.content -->
+{% endblock content %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="{% static 'js/plugins/bootstrap-datetimepicker.js' %}"></script>
+{% endblock js %}
+
+{% block inline_js %}
+<script>
+  // Date and time picker
+  $('.datetimepicker').datetimepicker({
+    format: 'DD-MM-YYYY hh:mm A',
+    icons: { time: 'fa fa-clock',  date: 'fa fa-calendar', }
+  });
+</script>
+{% endblock inline_js %}

@@ -1,0 +1,56 @@
+{% load static %}
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="{% url 'dashboard:home' %}" class="brand-link text-center">
+    <span class="brand-text font-weight-bold">SAJES</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="{% static 'img/profile.png' %}" class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a href="#" class="d-block">Admin</a>
+      </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          <a href="{% url 'dashboard:events:event-list' %}" class="nav-link {% if 'events' in request.path %} active {% endif %}">
+            <i class="far fa-calendar nav-icon"></i>
+            <p>Events</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="{% url 'dashboard:news:news-list' %}" class="nav-link {% if 'news' in request.path %} active {% endif %}">
+            <i class="fas fa-rss nav-icon"></i>
+            <p>News</p>
+          </a>
+        </li>
+        <li class="nav-item {% if 'gallery' in request.path %} menu-open {% endif %}">
+          <a href="#" class="nav-link {% if 'gallery' in request.path %} active {% endif %}">
+            <i class="fas fa-images nav-icon"></i>
+            <p>Gallery<i class="right fas fa-angle-left"></i></p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'dashboard:gallery:album-list' %}" class="nav-link {% if 'albums' in request.path %} active {% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Albums</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
