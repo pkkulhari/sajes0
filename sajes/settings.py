@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 import environ
-import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -90,7 +90,15 @@ WSGI_APPLICATION = "sajes.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {"default": env.db_url("DATABASE_URL")}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -151,12 +159,9 @@ SUMMERNOTE_CONFIG = {
 
 # Cloudinary
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": env("CLOUD_NAME"),
-    "API_KEY": env("API_KEY"),
-    "API_SECRET": env("API_SECRET"),
+    "CLOUD_NAME": env("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": env("CLOUDINARY_API_KEY"),
+    "API_SECRET": env("CLOUDINARY_API_SECRET"),
 }
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-
-# Heroku
-django_heroku.settings(locals())
