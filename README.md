@@ -8,12 +8,12 @@
 <h3 align="center">SAJES</h3>
 
   <p align="center">
-    A Landing Page + CMS for Shree Amar Jyot Education Society, Daman. The backend of the website was built using Django and a Postgres database. I implemented multiple image uploading functionality with compression and dockerized the app with Nginx for easy deployment. I also enabled HTTPS encryption using Let's Encrypt
+    A Landing Page + CMS for Shree Amar Jyot Education Society, Daman
     <br />
     <a href="https://github.com/pkkulhari/sajes/README.md"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://sajes.herokuapp.com/">View Demo</a>
+    <a href="https://sajes.onrender.com/">View Demo</a>
     ·
     <a href="https://github.com/pkkulhari/sajes/issues">Report Bug</a>
     ·
